@@ -1,0 +1,25 @@
+{
+  "candidate_id": "demo-001",
+  "project_id": 999,
+  "study_id": 501,
+  "report_id": 701,
+  "entity_type": "observation",
+  "status": "pending_review",
+  "payload": {
+    "variable_id": 1001,
+    "group_label": "Example intervention",
+    "timepoint": "follow-up",
+    "value": 12.4,
+    "dispersion_type": "sd",
+    "dispersion_value": 2.1,
+    "n": 40
+  },
+  "provenance": {
+    "source_location": "Synthetic report, Results, paragraph 2",
+    "source_text": "At follow-up, the example intervention group had a mean score of 12.4 (SD 2.1; n=40)."
+  },
+  "review": {
+    "human_status": "not_reviewed"
+  },
+  "notes": "Entirely synthetic public example; no research paper or private project data is represented."
+}
