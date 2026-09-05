@@ -22,12 +22,23 @@ exports/
 *.sqlite
 *.sqlite3
 *.sql
+*.dump
 *.xlsx
 *.xls
+*.csv
+*.tsv
 *.zip
 
 # Source documents/corpora
 *.pdf
+*.xml
+*.ris
+*.nbib
+*.bib
+
+# Private keys and certificates
+*.pem
+*.key
 
 # Python/local tooling
 __pycache__/

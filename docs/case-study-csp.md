@@ -1,48 +1,23 @@
 # Case study: CSP systematic review and meta-analysis
 
-The first production use of the platform was a systematic review and meta-analysis in conduction-system pacing (CSP) and heart-failure research.
+The platform was first developed for a conduction-system pacing (CSP) systematic review and meta-analysis. It began as a CSP-specific evidence database and was later generalized so that other research projects could reuse the same literature, evidence, review and analysis infrastructure.
 
-This work originally began as a CSP-specific evidence database. As the workflow expanded, the data model and review pipeline were refactored into reusable project-level infrastructure so that later research projects would not require a separate ingestion, review and analysis application.
+## Software workflow used
 
-## What this use case exercised
+The CSP project exercised:
 
-- literature search/import and deduplication;
-- study/report management;
-- full-text/source handling;
-- structured evidence extraction;
-- exact source provenance;
-- candidate-versus-curated evidence separation;
-- human scientific review and correction;
-- study-design/risk-of-bias workflow support;
-- statistical analysis and research exports.
+- literature discovery/import and deduplication;
+- screening and study/report management;
+- retained source material;
+- structured evidence extraction and provenance;
+- candidate validation and human review;
+- appraisal and risk-of-bias workflow support;
+- statistical analysis, exports and forest plots.
 
-## Generalization work prompted by CSP
-
-The original domain-specific tables and workflow were progressively supplemented by generalized concepts including:
-
-- project configuration versions;
-- project-scoped variables and synonyms;
-- study groups and comparisons;
-- observations and effect estimates;
-- statistical tests;
-- evidence provenance and controlled links;
-- analysis-specific evidence sets;
-- immutable review/audit history.
-
-The existing CSP records were retained while reusable adapters and generic entities were added around them rather than replacing the research database destructively.
+Generalization introduced project-scoped configuration, reusable scientific entities, explicit provenance, review history and analysis-specific evidence sets while retaining the existing CSP records.
 
 ## Private protocol boundary
 
-The CSP study is active/private research. This public repository therefore does **not** disclose the exact systematic-review or meta-analysis protocol.
+This public release describes the software workflow only. It does not disclose the CSP search strategy, eligibility criteria, outcome definitions, subgroup rules, appraisal configuration, statistical-analysis decisions, extracted evidence, results or research deliverables.
 
-In particular, it excludes:
-
-- exact database search strings and search-line construction;
-- inclusion/exclusion criteria and screening decision rules;
-- project-specific variable/outcome definitions;
-- statistical-analysis choices specific to the CSP project;
-- risk-of-bias/appraisal mappings and project decisions;
-- unpublished extracted evidence or study-level datasets;
-- client/research deliverables.
-
-The purpose of this case study is to show how the software was used and generalized, not to publish the underlying CSP protocol.
+The CSP project is included here as the origin of the platform, not as a public release of its scientific protocol.
