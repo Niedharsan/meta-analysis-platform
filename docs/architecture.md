@@ -1,66 +1,61 @@
 # Architecture
 
-The full system is a project-scoped evidence platform rather than a single-review database.
+The full system is a project-scoped evidence platform, not a database for one review.
 
-## High-level flow
+## Evidence flow
 
 ```mermaid
 flowchart TD
-    A[Project configuration] --> B[Literature search / import]
-    B --> C[Study and report records]
-    C --> D[Full-text/source assets]
-    D --> E[Extraction job]
+    A[Project configuration] --> B[Literature discovery / import]
+    B --> C[Deduplication and screening]
+    C --> D[Study, report and source records]
+    D --> E[Extraction]
     E --> F[Evidence candidates]
-    F --> G[Deterministic checks]
-    G --> H[Independent verification]
+    F --> G[Scope, schema and provenance checks]
+    G --> H[Non-approved scientific rows]
     H --> I[Human review]
     I --> J[Curated scientific evidence]
     J --> K[Analysis-specific evidence set]
     K --> L[Statistical analysis]
-    L --> M[Exports / forest plots / artifacts]
+    L --> M[Exports, forest plots and artifacts]
 ```
 
 ## Main layers
 
-### 1. Project layer
+### Project configuration
 
-Each research project has its own configuration and study membership. The generalized implementation supports reusable scientific concepts such as variables, study groups, comparisons, observations, effect estimates and statistical tests.
+Studies, variables and workflows are scoped to a research project. Configuration versions record the scientific rules used for extraction and analysis and whether a change requires revalidation or re-extraction.
 
-Project configuration is versioned so an extraction or analysis can be tied to the scientific rules that were active when it ran.
+### Literature and sources
 
-### 2. Source layer
+Search runs retain their source, query metadata and import counts. Imported citations are normalized and deduplicated. A study can have multiple reports, and source assets, parsed sections and tables remain linked to the report from which they came.
 
-A scientific study may be represented by multiple reports. Source records can retain identifiers, article sections, tables and imported full text or document text. Evidence provenance points back to the report/source location used to support a scientific claim.
+### Candidates and validation
 
-### 3. Candidate layer
+Automated extraction creates candidate records. Candidates are checked against project and study scope, a frozen configuration, typed scientific schemas and source provenance. An accepted candidate may be materialized as a scientific row with a non-approved review status; materialization is not human approval.
 
-AI-assisted extraction produces candidates rather than directly changing approved scientific evidence. Candidate identity, project scope, source references and proposed scientific payload are recorded separately from curated rows.
+The full implementation also supports contract-gated specialist and verifier roles. Verifier output is bound to the exact specialist result it checks. Passing automated gates makes output ready for review, not approved.
 
-### 4. Review layer
+### Review and provenance
 
-Candidates pass through validation and review transitions. Corrections are explicit. Approved scientific records retain provenance and review state; rejected or superseded candidates remain part of the audit history.
+Human review controls approval, rejection and correction. Approval requires attributable evidence or valid derivation lineage. Corrected records can create a successor version while preserving the prior row and decision history.
 
-### 5. Analysis layer
+### Analysis
 
-Analysis inclusion is kept separate from evidence storage. This allows the same reviewed evidence to participate in different analyses without permanently marking a scientific row as universally included or excluded.
+Evidence inclusion belongs to a particular analysis rather than being a permanent property of a scientific row. Analysis records retain selected evidence and calculated values, and generated artifacts are stored with integrity metadata.
 
-### 6. Client layer
+### Clients
 
-The platform backend is not tied to one language model provider. A Custom GPT using authenticated OpenAPI Actions has been used as one reasoning client. The scientific database, validation logic and review state remain server-side.
+The scientific data layer is provider-neutral. A Custom GPT using authenticated OpenAPI Actions is the current reference AI client; the browser application and API remain separate from that model interface.
 
-## Technology
+## Full-system technology
 
-The private implementation uses:
-
-- Python / FastAPI
-- Pydantic
-- SQLAlchemy
-- PostgreSQL
-- Alembic migrations
-- Next.js frontend
+- Python, FastAPI and Pydantic
+- SQLAlchemy, PostgreSQL and Alembic
+- Next.js
 - Docker
 - authenticated OpenAPI integrations
 
-## Public-release boundary
+## Public boundary
 
-This document describes the reusable architecture only. Project-specific scientific protocols, exact search strategies, private datasets, production prompts and complete implementation details are not part of the public release.
+This repository documents the architecture through reduced examples. It does not contain the complete schema, services, migrations, API contracts, project configurations or research data.

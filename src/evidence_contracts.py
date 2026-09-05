@@ -1,8 +1,7 @@
-"""Small public example of the evidence boundary used by the full platform.
+"""Simplified public contracts based on the private evidence workflow.
 
-This file is intentionally simplified. It demonstrates the project/report scope,
-source provenance and candidate-review separation without exposing the private
-production implementation or project-specific scientific protocols.
+These examples retain the production system's scope, configuration, provenance,
+candidate and review-state concepts without exposing its schemas or services.
 """
 
 from __future__ import annotations
@@ -27,13 +26,20 @@ def stable_hash(payload: Any) -> str:
 class EvidencePacket:
     project_id: int
     study_id: int
-    report_id: int
+    article_id: int
+    configuration_version_id: int
     source_location: str
     source_text: str
 
     def validate(self) -> None:
-        if min(self.project_id, self.study_id, self.report_id) <= 0:
-            raise ValueError("project, study and report IDs must be positive")
+        scoped_ids = (
+            self.project_id,
+            self.study_id,
+            self.article_id,
+            self.configuration_version_id,
+        )
+        if min(scoped_ids) <= 0:
+            raise ValueError("scope and configuration IDs must be positive")
         if not self.source_location.strip():
             raise ValueError("source location is required")
         if not self.source_text.strip():
@@ -51,17 +57,35 @@ class EvidenceCandidate:
     entity_type: str
     payload: dict[str, Any]
     packet_hash: str
-    status: str = "pending_review"
+    status: str = "pending"
 
     def validate(self) -> None:
         if not self.candidate_id.strip():
             raise ValueError("candidate ID is required")
         if not self.entity_type.strip():
             raise ValueError("entity type is required")
-        if self.status not in {"pending_review", "rejected", "approved"}:
+        if self.status not in {
+            "pending",
+            "published_pending_review",
+            "rejected",
+            "superseded",
+        }:
             raise ValueError("unsupported candidate status")
         if len(self.packet_hash) != 64:
             raise ValueError("candidate must bind to a source packet hash")
+
+
+@dataclass(frozen=True)
+class ScientificRecord:
+    entity_type: str
+    payload: dict[str, Any]
+    review_status: str = "draft_ai"
+    version: int = 1
+    previous_version_id: int | None = None
+
+    @property
+    def curated(self) -> bool:
+        return self.review_status in {"approved", "approved_with_edits"}
 
 
 @dataclass(frozen=True)

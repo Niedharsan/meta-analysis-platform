@@ -1,8 +1,7 @@
-"""Public demonstration of the candidate-to-curated review boundary.
+"""Public demonstration of materialization and curation checks.
 
-The production platform contains database transactions, project configuration,
-scientific schemas, provenance tables, version history and additional gates.
-Those implementation details are deliberately not part of this public release.
+The production system implements these boundaries with database transactions,
+versioned project configuration, typed schemas, provenance and review history.
 """
 
 from __future__ import annotations
@@ -11,12 +10,12 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class PublicationCheck:
+class MaterializationCheck:
     has_source_location: bool
     has_source_text: bool
     project_scope_valid: bool
     study_scope_valid: bool
-    human_approved: bool
+    configuration_is_frozen: bool
 
     @property
     def allowed(self) -> bool:
@@ -26,12 +25,12 @@ class PublicationCheck:
                 self.has_source_text,
                 self.project_scope_valid,
                 self.study_scope_valid,
-                self.human_approved,
+                self.configuration_is_frozen,
             )
         )
 
 
-def publication_check(
+def candidate_materialization_check(
     *,
     source_location: str | None,
     source_text: str | None,
@@ -39,14 +38,23 @@ def publication_check(
     target_project_id: int,
     candidate_study_id: int,
     target_study_id: int,
-    human_status: str,
-) -> PublicationCheck:
-    """Return the public, simplified form of the publication boundary."""
+    configuration_is_frozen: bool,
+) -> MaterializationCheck:
+    """Return a limited public form of the pre-materialization checks."""
 
-    return PublicationCheck(
+    return MaterializationCheck(
         has_source_location=bool(source_location and source_location.strip()),
         has_source_text=bool(source_text and source_text.strip()),
         project_scope_valid=candidate_project_id == target_project_id,
         study_scope_valid=candidate_study_id == target_study_id,
-        human_approved=human_status == "approved",
+        configuration_is_frozen=configuration_is_frozen,
+    )
+
+
+def is_curated(*, review_status: str, provenance_is_attributable: bool) -> bool:
+    """A materialized row is curated only after attributable human approval."""
+
+    return (
+        review_status in {"approved", "approved_with_edits"}
+        and provenance_is_attributable
     )
