@@ -28,7 +28,7 @@ The full system provides project-scoped literature ingestion, study and report m
 
 The scientific data layer is not tied to one model provider. The current reference interface is a Custom GPT using authenticated OpenAPI Actions.
 
-AI output is handled as proposed evidence. The server validates project and study scope, configuration, schema and provenance before a candidate can be materialized as a non-approved scientific row. Human review is still required before that row becomes curated evidence eligible for downstream scientific use. Corrections create auditable decisions and, where appropriate, successor versions rather than silently replacing prior records.
+AI output is handled as proposed evidence. The server validates project and study scope, configuration and schema, and records source provenance before a candidate can be materialized as a non-approved scientific row. Human approval additionally requires attributable provenance before that row becomes curated evidence eligible for downstream scientific use. Corrections create auditable decisions and, where appropriate, successor versions rather than silently replacing prior records.
 
 The public demo implements a small version of this boundary; it is not the production extraction or review engine.
 
