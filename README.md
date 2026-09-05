@@ -60,7 +60,9 @@ The second use case exercised the same platform with different scientific entiti
 
 The working system uses a PostgreSQL scientific data layer, FastAPI services, versioned database migrations, a browser interface and external AI clients through authenticated API contracts. The evidence platform itself does not require a specific model provider.
 
-A simplified view is provided in [Architecture](docs/architecture.md).
+- [Architecture](docs/architecture.md)
+- [AI integration](docs/ai-integration.md)
+- [Scientific governance](docs/scientific-governance.md)
 
 ## Evidence governance
 
@@ -74,13 +76,26 @@ The implementation follows several platform-level rules:
 - analysis inclusion is specific to the analysis rather than a permanent property of a row;
 - multiple reports from one study are not automatically treated as independent studies.
 
-[Read the scientific governance notes](docs/scientific-governance.md).
-
 ## Public code
 
 The `src/` directory contains small examples of the evidence contracts and review boundary used by the full system. They are intentionally limited and use synthetic data; they are not a drop-in copy of the private production implementation.
 
 The `examples/` directory contains synthetic records illustrating the public data model without exposing research data or copyrighted source text.
+
+Run the small standard-library demonstration with:
+
+```bash
+python src/demo.py
+```
+
+It shows that a source-grounded candidate remains blocked until the human-review condition is satisfied.
+
+Optional public-example tests:
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
+```
 
 ## Technology used in the full implementation
 
