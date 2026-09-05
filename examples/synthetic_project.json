@@ -1,0 +1,14 @@
+{
+  "project_id": 999,
+  "name": "Synthetic intervention review",
+  "review_type": "systematic_review_meta_analysis",
+  "configuration_version": 1,
+  "target_variables": [
+    {
+      "id": 1001,
+      "name": "Synthetic outcome score",
+      "type": "continuous"
+    }
+  ],
+  "notes": "Fictional example for the public technical release. Not derived from CSP or CRISPR research data."
+}
