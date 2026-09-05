@@ -1,0 +1,38 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+
+# Private research material
+private/
+research_data/
+storage/
+backups/
+outputs/
+exports/
+
+# Do not commit project-specific CSP protocol material
+*csp*protocol*
+*CSP*PROTOCOL*
+*search_strategy*
+*search-history*
+
+# Databases and research exports
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.xlsx
+*.xls
+*.zip
+
+# Source documents/corpora
+*.pdf
+
+# Python/local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
