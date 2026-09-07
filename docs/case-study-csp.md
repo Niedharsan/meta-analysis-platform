@@ -2,6 +2,20 @@
 
 The platform was first developed for a conduction-system pacing (CSP) systematic review and meta-analysis. It began as a CSP-specific evidence database and workflow, then became the foundation for the reusable multi-project platform.
 
+## Verified project scale
+
+The current research database contains:
+
+- 526 included study records;
+- 709 active article/source-report records;
+- 178 studies with retained full text;
+- 457 studies with extraction candidates;
+- 417 studies with structured scientific data.
+
+A PubMed deduplication check detected 4 duplicate records, leaving 521 unique PubMed records in that import set.
+
+The structured CSP evidence currently includes 1,499 outcome records, 1,351 baseline-characteristic records, 2,192 lead/device measurements, 1,790 clinical-event records and 482 effect-size records. These counts exclude universal observation rows that are migration copies of existing CSP evidence.
+
 ## How the CSP workflow was used
 
 A researcher defines the systematic-review/meta-analysis question and the information that needs to be collected. The AI client can then help translate the approved search requirements into database-specific literature searches, while the backend stores the returned records and retained source material.
@@ -27,6 +41,8 @@ The software organizes and audits this process. The AI can help find or structur
 ### Statistical analysis and forest plots
 
 The software contains deterministic statistical-analysis code rather than asking the language model to calculate the meta-analysis. It supports calculations such as confidence intervals and effect estimates, including paired pre/post handling when the required uncertainty information is available. Compatible study effects can be pooled by the analysis layer, and the system can generate forest plots together with the included/excluded evidence log and CSV/Excel analysis files.
+
+The current database does not yet contain a validated completed meta-analysis artifact. Historical forest-plot render files exist, but they are development outputs rather than a completed scientific result, so this public case study does not present them as validated meta-analysis findings.
 
 The exact statistical choices and analysis protocol used for the private CSP review are not disclosed in this public release.
 
