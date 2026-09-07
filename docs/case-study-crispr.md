@@ -4,19 +4,13 @@ The zebrafish CRISPR meta-analysis was the second real scientific use of the pla
 
 ## Verified project scale
 
-The current research database contains:
+The current research database contains **8,952 active article/source-report records**.
 
-- 3,230 study records;
-- 8,952 active article/source-report records;
-- 2,531 studies with retained full text;
-- 3,199 studies that reached a non-failure terminal processing state;
-- 197 studies with completed extraction items.
+Structured CRISPR data have been extracted from retained article text and structured sources such as tables or supplements, including abstract-level sources where full text was unavailable. The current evidence includes **18,528 normalized guides, 22,928 guide-to-report records, 4,812 experiments and 3,998 measurements**.
 
-A complete repeat ZFIN import detected all 3,230 existing records as duplicates and created no additional studies, confirming that the import path was deduplicating rather than duplicating the corpus.
+A complete repeat ZFIN import detected all 3,230 existing study records as duplicates and created no additional studies, confirming that the import path was deduplicating rather than duplicating the corpus.
 
-The current structured CRISPR evidence includes 18,528 normalized guides, 22,928 guide-to-report records, 4,812 current experiments and 3,998 current measurements. These records remain under scientific review; no CRISPR scientific records are currently marked human-approved.
-
-The project also has 6,777 source-asset database records linked to 933 article reports, resolving to 6,149 retained physical files (about 14.9 GB).
+The project also retains **6,149 physical source files** (about 14.9 GB), linked through the source-asset layer.
 
 ## What changed for the CRISPR project
 
