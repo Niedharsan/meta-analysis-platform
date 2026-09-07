@@ -50,10 +50,10 @@ AI-assisted extraction is kept separate from human scientific approval. The mode
 
 ## Scientific applications
 
-| Application | Role in the platform's development |
-| --- | --- |
-| CSP systematic review and meta-analysis | Original research use case that drove literature search, extraction, study-quality/risk-of-bias assessment and statistical-analysis requirements. The exact protocol and research data remain private. |
-| Zebrafish CRISPR meta-analysis | Second real use case that introduced guide-, experiment- and measurement-level evidence while reusing the same project, source, provenance and review infrastructure. |
+| Application | Verified scale | Role in the platform's development |
+| --- | --- | --- |
+| CSP systematic review and meta-analysis | **526 unique included studies**; structured scientific data for **417 studies** | Original research use case that drove literature search, extraction, study-quality/risk-of-bias assessment and statistical-analysis requirements. The exact protocol and research data remain private. |
+| Zebrafish CRISPR meta-analysis | **3,230 unique studies**; **18,528 guides**, **4,812 experiments** and **3,998 measurements** in the current database | Second real use case that introduced guide-, experiment- and measurement-level evidence while reusing the same project, source, provenance and review infrastructure. |
 
 - [CSP case study](docs/case-study-csp.md)
 - [CRISPR case study](docs/case-study-crispr.md)
