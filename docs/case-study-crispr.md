@@ -2,6 +2,22 @@
 
 The zebrafish CRISPR meta-analysis was the second real scientific use of the platform. It was used to test whether a system originally built around a clinical systematic review could support a very different molecular-biology evidence problem without creating a separate application from scratch.
 
+## Verified project scale
+
+The current research database contains:
+
+- 3,230 study records;
+- 8,952 active article/source-report records;
+- 2,531 studies with retained full text;
+- 3,199 studies that reached a non-failure terminal processing state;
+- 197 studies with completed extraction items.
+
+A complete repeat ZFIN import detected all 3,230 existing records as duplicates and created no additional studies, confirming that the import path was deduplicating rather than duplicating the corpus.
+
+The current structured CRISPR evidence includes 18,528 normalized guides, 22,928 guide-to-report records, 4,812 current experiments and 3,998 current measurements. These records remain under scientific review; no CRISPR scientific records are currently marked human-approved.
+
+The project also has 6,777 source-asset database records linked to 933 article reports, resolving to 6,149 retained physical files (about 14.9 GB).
+
 ## What changed for the CRISPR project
 
 The shared platform already handled projects, literature records, retained source material, provenance, review state and exports. The CRISPR project added domain-specific scientific records for:
@@ -36,4 +52,4 @@ The CRISPR-specific records were added on top of that shared infrastructure rath
 
 ## Public boundary
 
-This public case study describes the implemented workflow and safeguards only. It does not publish the CRISPR extraction registry, production prompts, source corpus, validation datasets, live database contents or research results.
+This public case study describes the implemented workflow, verified project scale and safeguards only. It does not publish the CRISPR extraction registry, production prompts, source corpus, validation datasets, live scientific values or research results.
