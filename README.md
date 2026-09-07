@@ -34,7 +34,9 @@ The literature is **not sent to the model as one huge prompt**. The backend stor
 
 The extracted data are stored in PostgreSQL first, not directly in Excel. Excel and CSV are generated later as project-specific exports of the structured evidence database. The project schema is designed around the information required for the review. If extraction repeatedly encounters a useful scientific concept that is not represented, it can be flagged for consideration rather than silently changing the schema.
 
-Screening, scientific approval and final analysis decisions remain controlled steps. The AI can search, inspect and propose evidence, but it does not independently change the review protocol or turn its own output into human-approved scientific evidence.
+Screening, scientific approval and final analysis decisions remain controlled steps. The AI can search, inspect and propose evidence, but it does not independently change the review protocol or make the final scientific decisions.
+
+Where a review includes study-quality or risk-of-bias assessment, the platform also helps organize that process. It can record the study design, the appraisal/risk-of-bias framework being used, the source evidence behind reviewer judgements, disagreements and consensus, and the final approved assessment for export. The AI can assist with locating or structuring supporting evidence, but the final appraisal judgement remains a human scientific decision.
 
 ## AI client and scientific controls
 
@@ -42,18 +44,16 @@ The AI layer is replaceable. The current reference client is a **Custom GPT usin
 
 A Custom GPT was used during development because it allowed long, interactive extraction workflows without separately metering every model call through a model API, which reduced direct API costs while the workflow was being developed and tested. This is a practical client choice, not a requirement of the architecture.
 
-The same backend can instead be connected to an OpenAI, Gemini, Anthropic or other model API, or to another agent runtime, without redesigning the scientific database or review workflow. The AI communicates through typed API contracts; the backend remains responsible for authentication, project/study scope, source retention, provenance, validation, review state and analysis.
+The same backend can instead be connected to an OpenAI, Gemini, Anthropic or other model API, or to another agent runtime, without redesigning the scientific database or review workflow. The AI communicates through typed API contracts; the backend remains responsible for authentication, project/study scope, source retention, provenance, review state and analysis.
 
-AI-generated output is treated as **proposed evidence**. A candidate must be linked to the correct project, study/report and source material and pass the relevant schema/provenance checks before it can enter the review workflow. Human review is required before it becomes curated scientific evidence.
-
-This separation is intentional: a model can produce valid-looking structured data that is still scientifically wrong.
+AI-assisted extraction is kept separate from human scientific approval. The model can propose structured records and supporting source evidence, while the platform keeps those records reviewable until a researcher approves or corrects them.
 
 ## Scientific applications
 
-| Application | Role in the platform's development |
-| --- | --- |
-| CSP systematic review and meta-analysis | Original research use case that drove literature search, extraction, provenance, review, appraisal and statistical-analysis requirements. The exact protocol and research data remain private. |
-| Zebrafish CRISPR meta-analysis | Second real use case that introduced guide-, experiment- and measurement-level evidence while reusing the same project, source, provenance and review infrastructure. |
+| Application | Verified scale | Role in the platform's development |
+| --- | --- | --- |
+| CSP systematic review and meta-analysis | **526 unique included studies**; structured scientific data for **417 studies** | Original research use case that drove literature search, extraction, study-quality/risk-of-bias assessment and statistical-analysis requirements. The exact protocol and research data remain private. |
+| Zebrafish CRISPR meta-analysis | **3,230 unique studies**; **18,528 guides**, **4,812 experiments** and **3,998 measurements** in the current database | Second real use case that introduced guide-, experiment- and measurement-level evidence while reusing the same project, source, provenance and review infrastructure. |
 
 - [CSP case study](docs/case-study-csp.md)
 - [CRISPR case study](docs/case-study-crispr.md)
@@ -66,7 +66,7 @@ Instead of building a separate application for the zebrafish CRISPR review, thos
 
 ## Public demonstration
 
-The public example uses synthetic records only and demonstrates the candidate-versus-curated-evidence boundary:
+The public example uses synthetic records only and demonstrates that AI-extracted data remains unapproved until the human review step:
 
 ```bash
 python src/demo.py
