@@ -1,20 +1,41 @@
 # Case study: zebrafish CRISPR meta-analysis
 
-The zebrafish CRISPR meta-analysis was the second real scientific use of the platform. The original system was expanded from clinical evidence review to support different research domains. 
+The zebrafish CRISPR meta-analysis was the second real scientific use of the platform. It was used to test whether a system originally built around a clinical systematic review could support a very different molecular-biology evidence problem without creating a separate application from scratch.
 
-## Implementation
+## What changed for the CRISPR project
 
-The CRISPR project added domain-specific records for guides, experiments, guide-to-experiment relationships and measurements. 
+The shared platform already handled projects, literature records, retained source material, provenance, review state and exports. The CRISPR project added domain-specific scientific records for:
 
-The implemented workflow includes source acquisition and retention, structured and narrative extraction, review queues, validation cohorts, project exports and analysis-readiness checks.
+- CRISPR guides and reported guide sequences;
+- experiments;
+- guide-to-experiment relationships;
+- measurements and reported outcomes.
 
-Added Tools:
-Tide analysis to calculate CRISPR efficency?
+The extraction workflow can process both narrative text and structured material such as article tables and supplements. Extracted guide, experiment and measurement records remain linked to the paper/report and source evidence from which they came.
 
-... Literature was examined
-... guides were extracted with values so far
-... 
+## CRISPR-specific evidence handling
+
+The CRISPR layer distinguishes different types of reported evidence rather than treating every percentage as the same result. Examples include editing/indel measurements, phenotype or germline outcomes, and named analysis outputs such as TIDE or ICE when those values are reported by a paper.
+
+The platform **does not run the TIDE or ICE algorithms itself**. Instead, it recognizes reported TIDE/ICE values as specific measurement types and stores them with their source and context. This avoids presenting a literature-reported assay result as a calculation performed by the platform.
+
+Other safeguards include:
+
+- missing measurements are not converted to zero;
+- a genuine reported zero is kept distinct from missing, not tested, not reported or failed-assay states;
+- multiplex outcomes are not automatically copied to individual component guides;
+- reported guide sequences are preserved rather than silently inferred or rewritten;
+- evidence remains linked to its source;
+- automated specialist and verifier roles can check extraction quality but cannot approve their own output as accepted scientific evidence.
+
+## What this use case demonstrated
+
+The important result was architectural reuse. A clinical systematic review and a zebrafish CRISPR evidence project require very different scientific fields, but they can still share the same underlying workflow for:
+
+`literature and sources → structured extraction → provenance → review → curated evidence → project exports`
+
+The CRISPR-specific records were added on top of that shared infrastructure rather than building another independent literature/extraction system.
 
 ## Public boundary
 
-This case study confirms the implemented architectural reuse without publishing the CRISPR extraction registry, production prompts, source corpus, validation data or research results.
+This public case study describes the implemented workflow and safeguards only. It does not publish the CRISPR extraction registry, production prompts, source corpus, validation datasets, live database contents or research results.
