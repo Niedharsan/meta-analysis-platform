@@ -4,47 +4,69 @@
 
 A reusable evidence-synthesis and meta-analysis platform for life-sciences research.
 
-The system began with a conduction-system pacing (CSP) systematic review and meta-analysis, was generalized into a multi-project evidence platform, and was later used for a zebrafish CRISPR meta-analysis. It supports the path from literature retrieval to reviewed evidence and reproducible analysis outputs.
+The system began with a conduction-system pacing (CSP) systematic review and meta-analysis, was then generalized into a multi-project evidence platform, and was later used for a zebrafish CRISPR meta-analysis as a second scientific use case.
 
 > **Limited public release:** This repository contains representative code, synthetic examples and technical documentation. It is not the complete research system and does not include private protocols, research data or production implementation details.
 
-## Workflow
+## What the platform does
+
+A researcher starts with a systematic-review or meta-analysis question and defines the scientific information that needs to be collected.
+
+The workflow is then:
 
 ```mermaid
 flowchart LR
-    A[Literature discovery / import] --> B[Deduplication and screening]
-    B --> C[Retained source material]
-    C --> D[Structured evidence candidates]
-    D --> E[Provenance and validation]
-    E --> F[Human review]
-    F --> G[Curated evidence]
-    G --> H[Analysis / meta-analysis]
-    H --> I[Reproducible outputs]
+    A[Research question and extraction requirements] --> B[Search queries]
+    B --> C[Literature APIs / database imports]
+    C --> D[Deduplication and screening]
+    D --> E[Retained papers, tables and supplements]
+    E --> F[AI-assisted paper-by-paper extraction]
+    F --> G[Structured evidence database]
+    G --> H[Human review]
+    H --> I[Curated evidence]
+    I --> J[Statistical analysis / meta-analysis]
+    J --> K[Excel, CSV, forest plots and analysis outputs]
 ```
 
-The full system provides project-scoped literature ingestion, study and report management, source retention, structured extraction, provenance, review history, statistical analysis, exports and forest plots. Project configuration and analysis evidence sets are versioned so that scientific decisions can be traced to the rules and evidence used at the time.
+For the current reference workflow, the AI client translates the approved review requirements into database-specific search queries, uses the platform API to run supported searches or register/import results from other literature databases, and then works through the retained papers individually.
 
-## AI boundary
+The literature is **not sent to the model as one huge prompt**. The backend stores the records and source material. The AI reads each study/report in bounded source chunks, including retained tables and supplements where available, and proposes structured evidence fields with source quotations and locations.
 
-The scientific data layer is not tied to one model provider. The current reference interface is a Custom GPT using authenticated OpenAPI Actions.
+The extracted data are stored in PostgreSQL first, not directly in Excel. Excel and CSV are generated later as project-specific exports of the structured evidence database. The project schema is designed around the information required for the review. If extraction repeatedly encounters a useful scientific concept that is not represented, it can be flagged for consideration rather than silently changing the schema.
 
-AI output is handled as proposed evidence. The server validates project and study scope, configuration and schema, and records source provenance before a candidate can be materialized as a non-approved scientific row. Human approval additionally requires attributable provenance before that row becomes curated evidence eligible for downstream scientific use. Corrections create auditable decisions and, where appropriate, successor versions rather than silently replacing prior records.
+Screening, scientific approval and final analysis decisions remain controlled steps. The AI can search, inspect and propose evidence, but it does not independently change the review protocol or turn its own output into human-approved scientific evidence.
 
-The public demo implements a small version of this boundary; it is not the production extraction or review engine.
+## AI client and scientific controls
+
+The AI layer is replaceable. The current reference client is a **Custom GPT using authenticated OpenAPI Actions**.
+
+A Custom GPT was used during development because it allowed long, interactive extraction workflows without separately metering every model call through a model API, which reduced direct API costs while the workflow was being developed and tested. This is a practical client choice, not a requirement of the architecture.
+
+The same backend can instead be connected to an OpenAI, Gemini, Anthropic or other model API, or to another agent runtime, without redesigning the scientific database or review workflow. The AI communicates through typed API contracts; the backend remains responsible for authentication, project/study scope, source retention, provenance, validation, review state and analysis.
+
+AI-generated output is treated as **proposed evidence**. A candidate must be linked to the correct project, study/report and source material and pass the relevant schema/provenance checks before it can enter the review workflow. Human review is required before it becomes curated scientific evidence.
+
+This separation is intentional: a model can produce valid-looking structured data that is still scientifically wrong.
 
 ## Scientific applications
 
 | Application | Role in the platform's development |
 | --- | --- |
-| CSP systematic review and meta-analysis | Initial research use case; prompted the evidence database, review workflow and later generalization. The protocol and research data remain private. |
-| Zebrafish CRISPR meta-analysis | Second real use case; added domain-specific guide, experiment and measurement records while reusing shared project, source, provenance and review infrastructure. |
+| CSP systematic review and meta-analysis | Original research use case that drove literature search, extraction, provenance, review, appraisal and statistical-analysis requirements. The exact protocol and research data remain private. |
+| Zebrafish CRISPR meta-analysis | Second real use case that introduced guide-, experiment- and measurement-level evidence while reusing the same project, source, provenance and review infrastructure. |
 
 - [CSP case study](docs/case-study-csp.md)
 - [CRISPR case study](docs/case-study-crispr.md)
 
+## Why the architecture was generalized
+
+The first version was built around one real CSP review. As the workflow grew, the reusable parts became clear: projects, studies and reports, retained sources, structured extraction, provenance, review decisions and analysis outputs.
+
+Instead of building a separate application for the zebrafish CRISPR review, those concepts were moved into shared infrastructure and the domain-specific scientific fields were kept project-specific. This allowed a clinical meta-analysis and a molecular-biology meta-analysis to use the same core evidence workflow.
+
 ## Public demonstration
 
-The example uses synthetic records only and the Python standard library:
+The public example uses synthetic records only and demonstrates the candidate-versus-curated-evidence boundary:
 
 ```bash
 python src/demo.py
