@@ -15,11 +15,9 @@ The extraction workflow can process both narrative text and structured material 
 
 ## CRISPR-specific evidence handling
 
-The CRISPR layer distinguishes different types of reported evidence rather than treating every percentage as the same result. Examples include editing/indel measurements, phenotype or germline outcomes, and named analysis outputs such as TIDE or ICE when those values are reported by a paper.
+The CRISPR layer distinguishes different types of reported evidence rather than treating every percentage as the same result. For example, editing or indel measurements, phenotype outcomes, germline transmission and knock-in outcomes remain separate scientific measurements.
 
-The platform **does not run the TIDE or ICE algorithms itself**. Instead, it recognizes reported TIDE/ICE values as specific measurement types and stores them with their source and context. This avoids presenting a literature-reported assay result as a calculation performed by the platform.
-
-Other safeguards include:
+Safeguards include:
 
 - missing measurements are not converted to zero;
 - a genuine reported zero is kept distinct from missing, not tested, not reported or failed-assay states;
