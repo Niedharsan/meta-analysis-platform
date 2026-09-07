@@ -4,7 +4,7 @@ The zebrafish CRISPR meta-analysis was the second real scientific use of the pla
 
 ## Verified project scale
 
-The current research database contains **8,952 active article/source-report records**.
+The current research database contains **3,230 unique zebrafish CRISPR study records**.
 
 Structured CRISPR data have been extracted from retained article text and structured sources such as tables or supplements, including abstract-level sources where full text was unavailable. The current evidence includes **18,528 normalized guides, 22,928 guide-to-report records, 4,812 experiments and 3,998 measurements**.
 
