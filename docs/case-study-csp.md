@@ -18,33 +18,30 @@ The CSP project therefore exercised the full workflow:
 
 The platform keeps the literature records associated with the project, supports screening workflows, and distinguishes a scientific study from the individual papers or reports that may come from that study. This matters because one trial can have a primary publication, follow-up papers or supplementary reports without representing separate independent studies.
 
-### Evidence review and provenance
+### Study quality and risk-of-bias assessment
 
-AI-extracted values enter as proposed evidence. The system keeps each value linked to its study/report and source evidence, and records the review history when a researcher accepts, rejects or corrects it.
+After studies are selected, the platform also supports the part of a systematic review where researchers assess how trustworthy each study is. It can record the study design, link the study to the appropriate appraisal or risk-of-bias framework, keep the source evidence used for each assessment, preserve reviewer judgements and disagreements, and export the final approved assessment.
 
-### Study appraisal and risk of bias
-
-The platform also contains workflow support for study-design classification, appraisal/risk-of-bias tools, source-backed reviewer assessments, review history and consensus/export checks. These are controlled review workflows: the AI can help prepare or inspect evidence, but the scientific judgement and approval remain attributable to human reviewers.
+The software organizes and audits this process. The AI can help find or structure the supporting evidence, but the final appraisal and risk-of-bias judgement remains a human scientific decision.
 
 ### Statistical analysis and forest plots
 
-Yes — the software contains deterministic statistical-analysis code rather than asking the language model to calculate the meta-analysis. It supports calculations such as confidence intervals and effect estimates, including paired pre/post handling when the required uncertainty information is available. Compatible study effects can be pooled by the analysis layer, and the system can generate forest plots together with the included/excluded evidence log and CSV/Excel analysis files.
+The software contains deterministic statistical-analysis code rather than asking the language model to calculate the meta-analysis. It supports calculations such as confidence intervals and effect estimates, including paired pre/post handling when the required uncertainty information is available. Compatible study effects can be pooled by the analysis layer, and the system can generate forest plots together with the included/excluded evidence log and CSV/Excel analysis files.
 
 The exact statistical choices and analysis protocol used for the private CSP review are not disclosed in this public release.
 
 ## What was generalized
 
-The original CSP records were retained rather than being discarded and rebuilt. Shared concepts were then added around them so that other projects could reuse the same infrastructure.
+The existing CSP dataset was kept in place while the reusable parts of the system were separated from CSP-specific scientific fields.
 
 In practical terms:
 
-- each research project can have its own scientific configuration and extraction requirements;
-- common concepts such as studies, reports, variables, groups, measurements/effect estimates and source evidence can be reused across projects;
-- provenance records where scientific values came from;
-- review history records what was accepted, rejected or corrected;
-- an approved scientific value can still be included or excluded differently for a particular analysis, rather than being automatically used in every meta-analysis.
+- each research project can define its own scientific variables, groups, outcomes and extraction requirements;
+- studies, reports, retained sources and evidence provenance can be managed in the same way across projects;
+- review and audit history can be preserved consistently across projects;
+- statistical analysis can use a project- and analysis-specific set of eligible evidence rather than automatically using every stored value.
 
-This allowed the CSP review to remain intact while the same core platform was later reused for zebrafish CRISPR evidence.
+This meant the CSP review did not have to be rebuilt when the same core platform was later reused for zebrafish CRISPR evidence.
 
 ## Private protocol boundary
 
