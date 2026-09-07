@@ -4,17 +4,11 @@ The platform was first developed for a conduction-system pacing (CSP) systematic
 
 ## Verified project scale
 
-The current research database contains:
+The current research database contains **709 active article/source-report records**.
 
-- 526 included study records;
-- 709 active article/source-report records;
-- 178 studies with retained full text;
-- 457 studies with extraction candidates;
-- 417 studies with structured scientific data.
+Structured scientific data have been extracted from retained source text, including abstracts or full text where available, for **417 studies**. The current CSP evidence includes 1,499 outcome records, 1,351 baseline-characteristic records, 2,192 lead/device measurements, 1,790 clinical-event records and 482 effect-size records. These counts exclude universal observation rows that are migration copies of existing CSP evidence.
 
 A PubMed deduplication check detected 4 duplicate records, leaving 521 unique PubMed records in that import set.
-
-The structured CSP evidence currently includes 1,499 outcome records, 1,351 baseline-characteristic records, 2,192 lead/device measurements, 1,790 clinical-event records and 482 effect-size records. These counts exclude universal observation rows that are migration copies of existing CSP evidence.
 
 ## How the CSP workflow was used
 
